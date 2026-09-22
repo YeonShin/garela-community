@@ -1,4 +1,4 @@
-# 🚀 Garela Community — 템플릿 하나로 완성도 높은 글을 쓰고 공유하는 커뮤니티
+# 🚀 Garela Community
 
 <div align="center">
   <img src="docs/assets/readme/메인.png" alt="Garela Community 대표 화면" width="100%" />
@@ -7,14 +7,13 @@
 <br/>
 
 <div align="center">
+  <div style="font-size: 20px; font-weight: bold; margin-bottom: 16px;">템플릿 하나로 완성도 높은 글을 쓰고 공유하는 커뮤니티</div>
   <img src="https://img.shields.io/badge/프로젝트 기간-2024.06.24~2024.07.19-fab2ac?style=flat" />
 </div>
 
 <br/>
 
 ## 🛎️ 서비스 소개
-
-> 서비스 URL: 배포 전 (로컬 환경에서 직접 실행해 확인할 수 있습니다)
 
 - Garela Community는 커뮤니티에 공유된 마크다운 템플릿을 스크랩해 글쓰기 에디터에 바로 적용하고, 누적된 게시글 데이터를 기반으로 AI 챗봇에게 질문할 수 있는 지식 공유 커뮤니티 플랫폼입니다.
 - 대상 사용자: 글쓰기 진입장벽을 느끼는 커뮤니티 이용자
