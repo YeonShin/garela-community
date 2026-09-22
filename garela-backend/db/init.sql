@@ -1,5 +1,9 @@
 USE garela_db;
 
+-- mysql 클라이언트 세션 기본 문자셋(latin1)으로 인해 이후 한글 데이터(seed.sql 등)가
+-- 깨져 저장되는 것을 막기 위해 명시적으로 utf8mb4로 고정한다.
+SET NAMES utf8mb4;
+
 -- 1. users 테이블
 CREATE TABLE IF NOT EXISTS users (
 	user_id INT AUTO_INCREMENT PRIMARY KEY,
