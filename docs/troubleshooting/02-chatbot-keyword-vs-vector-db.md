@@ -57,4 +57,4 @@ async function getAnswer(question) {
 ## 참고
 
 - 관련 코드: `garela-backend/routes/chat.js`, `garela-backend/langchain_service.py`
-- 인턴십 회고 원문: [../회고-러프.md](../회고-러프.md)
+- 인턴십 회고: [../인턴십 회고록.md](../인턴십%20회고록.md)
