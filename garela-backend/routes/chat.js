@@ -63,7 +63,7 @@ async function getAnswer(question) {
   console.log(keywords);
   const { content, postIds } = await getPostsContent(keywords);
 
-  const response = await axios.post('http://localhost:5001/generate-answer', {
+  const response = await axios.post('http://ai:5001/generate-answer', {
     context: content,
     question: question
   });
