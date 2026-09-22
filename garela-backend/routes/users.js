@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../db');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
+const SALT_ROUNDS = 10;
 const authenticateJWT = require('../middleware/authenticateJWT');
 const multer = require('multer');
 const { S3Client } = require('@aws-sdk/client-s3');
@@ -65,16 +68,21 @@ const upload = multer({ storage: storage });
  *       500:
  *         description: Internal server error
  */
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   const { email, password, name, info } = req.body;
   if (!email || !password || !name || !info) {
     return res.status(400).send('Missing required fields');
   }
-  const query = 'INSERT INTO users (email, password, name, info) VALUES (?, ?, ?, ?)';
-  connection.query(query, [email, password, name, info], (err, result) => {
-    if (err) return res.status(500).send(err);
-    res.status(200).json({ result: 'User registered', user_id: result.insertId });
-  });
+  try {
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    const query = 'INSERT INTO users (email, password, name, info) VALUES (?, ?, ?, ?)';
+    connection.query(query, [email, hashedPassword, name, info], (err, result) => {
+      if (err) return res.status(500).send(err);
+      res.status(200).json({ result: 'User registered', user_id: result.insertId });
+    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 /**
@@ -118,15 +126,22 @@ router.post('/login', (req, res) => {
   if (!email || !password) {
     return res.status(400).send('Missing required fields');
   }
-  const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-  connection.query(query, [email, password], (err, results) => {
+  const query = 'SELECT * FROM users WHERE email = ?';
+  connection.query(query, [email], async (err, results) => {
     if (err) return res.status(500).send(err);
-    if (results.length > 0) {
-      const user = results[0];
+    if (results.length === 0) {
+      return res.status(401).send('Invalid credentials');
+    }
+    const user = results[0];
+    try {
+      const passwordMatches = await bcrypt.compare(password, user.password);
+      if (!passwordMatches) {
+        return res.status(401).send('Invalid credentials');
+      }
       const token = jwt.sign({ userId: user.user_id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
       res.json({ token });
-    } else {
-      res.status(401).send('Invalid credentials');
+    } catch (err) {
+      res.status(500).send(err);
     }
   });
 });
