@@ -6,8 +6,10 @@
 
 <br/>
 
+## 템플릿 하나로 완성도 높은 글을 쓰고 공유하는 커뮤니티
+
 <div align="center">
-  <div style="font-size: 20px; font-weight: bold; margin-bottom: 16px;">템플릿 하나로 완성도 높은 글을 쓰고 공유하는 커뮤니티</div>
+  
   <img src="https://img.shields.io/badge/프로젝트 기간-2024.06.24~2024.07.19-fab2ac?style=flat" />
 </div>
 
